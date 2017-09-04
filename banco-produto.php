@@ -13,18 +13,19 @@ function listaProdutos($con) {
 
 	while($produto_array = mysqli_fetch_assoc($resultado)) {
 		
-		$produto = new Produto();
 		$categoria = new Categoria();
 
 		$categoria->setId($produto_array['categoria_id']);
 		$categoria->setNome($produto_array['categoria_nome']);
 
+		$nome = $produto_array['nome'];
+		$preco = $produto_array['preco'];
+		$descricao = $produto_array['descricao'];
+		$usado = $produto_array['usado'];
+
+		$produto = new Produto($nome, $preco, $descricao, $categoria, $usado);
+		
 		$produto->setId($produto_array['id']);
-		$produto->setNome($produto_array['nome']);
-		$produto->setPreco($produto_array['preco']);
-		$produto->setDescricao($produto_array['descricao']);
-		$produto->setCategoria($categoria);
-		$produto->setUsado($produto_array['usado']);
 
 		array_push($produtos, $produto);
 	}
@@ -38,17 +39,18 @@ function buscaProduto($con, $id) {
 
 	$produto_array = mysqli_fetch_assoc($resultado);
 
-	$produto = new Produto();
 	$categoria = new Categoria();
 
 	$categoria->setId($produto_array['categoria_id']);
 
+	$nome = $produto_array['nome'];
+	$preco = $produto_array['preco'];
+	$descricao = $produto_array['descricao'];
+	$usado = $produto_array['usado'];
+
+	$produto = new Produto($nome, $preco, $descricao, $categoria, $usado);
+	
 	$produto->setId($produto_array['id']);
-	$produto->setNome($produto_array['nome']);
-	$produto->setPreco($produto_array['preco']);
-	$produto->setDescricao($produto_array['descricao']);
-	$produto->setCategoria($categoria);
-	$produto->setUsado($produto_array['usado']);
 
 	return $produto;
 }
@@ -59,7 +61,7 @@ function alteraProduto($con, Produto $produto) {
 	$preco = $con->real_escape_string($produto->getPreco());
 	$descricao = $con->real_escape_string($produto->getDescricao());
 
-	$query = "UPDATE produtos SET nome = '{$nome}', preco = {$preco}, descricao = '{$descricao}', categoria_id = '{$produto->cgetCtegoria()->getId()}', usado = {$produto->getUsado()} WHERE id = '{$produto->getId()}'";
+	$query = "UPDATE produtos SET nome = '{$nome}', preco = {$preco}, descricao = '{$descricao}', categoria_id = '{$produto->getCategoria()->getId()}', usado = {$produto->getUsado()} WHERE id = '{$produto->getId()}'";
 	return $con->query($query);
 }
 

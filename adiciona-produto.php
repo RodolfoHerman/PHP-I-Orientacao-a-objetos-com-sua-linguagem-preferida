@@ -7,25 +7,26 @@
 
 	verificaUsuario();
 
+	
 	$produto = new Produto();
 	$categoria = new Categoria();
 
-	$categoria->id = $_POST['categoria_id'];
+	$categoria->setId($_POST['categoria_id']);
 
-	$produto->nome = $_POST['nome'];
-	$produto->preco = $_POST['preco'];
-	$produto->descricao = $_POST['descricao'];
-	$produto->categoria = $categoria;
-	$produto->usado = array_key_exists('usado', $_POST) ? 'true' : 'false';
+	$produto->setNome($_POST['nome']);
+	$produto->setPreco($_POST['preco']);
+	$produto->setDescricao($_POST['descricao']);
+	$produto->setCategoria($categoria);
+	$produto->setUsado(array_key_exists('usado', $_POST) ? 'true' : 'false');
 ?>
 
 <?php if(insereProduto($con, $produto)): ?>
 	<p class="text-success">
-		Produto <?php echo $produto->nome; ?> com o valor de R$<?php echo $produto->preco; ?> adicionado com sucesso !!
+		Produto <?php echo $produto->getNome(); ?> com o valor de R$<?php echo $produto->getPreco(); ?> adicionado com sucesso !!
 	</p>	
 <?php else: ?>
 	<p class="text-danger">
-		Produto <?php echo $produto->nome; ?> com o valor de R$<?php echo $produto->preco; ?> não foi adicionado. Erro: <?php echo $con->error; ?>
+		Produto <?php echo $produto->getNome(); ?> com o valor de R$<?php echo $produto->getPreco(); ?> não foi adicionado. Erro: <?php echo $con->error; ?>
 	</p>
 <?php endif; ?>
 

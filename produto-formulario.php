@@ -8,15 +8,15 @@
 	verificaUsuario();
 
 	$categoria_nova = new Categoria();
-	$categoria_nova->id = 1;
+	$categoria_nova->setId(1);
 
 	$produto = new Produto();
 
-	$produto->nome = "";
-	$produto->preco = "";
-	$produto->descricao = "";
-	$produto->categoria = $categoria_nova;
-	$produto->usado = "";	
+	$produto->setNome("");
+	$produto->setPreco("");
+	$produto->setDescricao("");
+	$produto->setCategoria($categoria_nova);
+	$produto->setUsado("");	
 
 ?>
 

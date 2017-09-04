@@ -7,16 +7,16 @@
 <table class="table table-striped table-hover table-bordered">
 	<?php foreach(listaProdutos($con) as $produto): ?>
 		<tr>
-			<td><?php echo $produto->nome; ?></td>
-			<td><?php echo $produto->preco; ?></td>
+			<td><?php echo $produto->getNome(); ?></td>
+			<td><?php echo $produto->getPreco(); ?></td>
 			<td><?php echo $produto->precoComDesconto(0.2); ?></td>
-			<td><?php echo substr($produto->descricao, 0, 40); ?></td>
-			<td><?php echo $produto->usado ? 'usado' : 'novo' ?></td>
-			<td><?php echo $produto->categoria->nome; ?></td>
-			<td><a class="btn btn-primary" href="produto-altera-formulario.php?id=<?php echo $produto->id; ?>">Alterar</a></td>
+			<td><?php echo substr($produto->getDescricao(), 0, 40); ?></td>
+			<td><?php echo $produto->getUsado() ? 'usado' : 'novo' ?></td>
+			<td><?php echo $produto->getCategoria()->getNome(); ?></td>
+			<td><a class="btn btn-primary" href="produto-altera-formulario.php?id=<?php echo $produto->getId(); ?>">Alterar</a></td>
 			<td>
 				<form action="remove-produto.php" method="POST">
-					<input type="hidden" name="id" value="<?php echo $produto->id; ?>">
+					<input type="hidden" name="id" value="<?php echo $produto->getId(); ?>">
 					<button type="submit" class="btn btn-danger">Remover</button>
 				</form>
 			</td>

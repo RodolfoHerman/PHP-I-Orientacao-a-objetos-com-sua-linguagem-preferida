@@ -16,15 +16,15 @@ function listaProdutos($con) {
 		$produto = new Produto();
 		$categoria = new Categoria();
 
-		$categoria->id = $produto_array['categoria_id'];
-		$categoria->nome = $produto_array['categoria_nome'];
+		$categoria->setId($produto_array['categoria_id']);
+		$categoria->setNome($produto_array['categoria_nome']);
 
-		$produto->id = $produto_array['id'];
-		$produto->nome = $produto_array['nome'];
-		$produto->preco = $produto_array['preco'];
-		$produto->descricao = $produto_array['descricao'];
-		$produto->categoria = $categoria;
-		$produto->usado = $produto_array['usado'];	
+		$produto->setId($produto_array['id']);
+		$produto->setNome($produto_array['nome']);
+		$produto->setPreco($produto_array['preco']);
+		$produto->setDescricao($produto_array['descricao']);
+		$produto->setCategoria($categoria);
+		$produto->setUsado($produto_array['usado']);
 
 		array_push($produtos, $produto);
 	}
@@ -41,36 +41,35 @@ function buscaProduto($con, $id) {
 	$produto = new Produto();
 	$categoria = new Categoria();
 
-	$categoria->id = $produto_array['categoria_id'];
+	$categoria->setId($produto_array['categoria_id']);
 
-	$produto->id = $produto_array['id'];
-	$produto->nome = $produto_array['nome'];
-	$produto->preco = $produto_array['preco'];
-	$produto->descricao = $produto_array['descricao'];
-	$produto->categoria = $categoria;
-	$produto->usado = $produto_array['usado'];
-
+	$produto->setId($produto_array['id']);
+	$produto->setNome($produto_array['nome']);
+	$produto->setPreco($produto_array['preco']);
+	$produto->setDescricao($produto_array['descricao']);
+	$produto->setCategoria($categoria);
+	$produto->setUsado($produto_array['usado']);
 
 	return $produto;
 }
 
 function alteraProduto($con, Produto $produto) {
 
-	$nome = $con->real_escape_string($produto->nome);
-	$preco = $con->real_escape_string($produto->preco);
-	$descricao = $con->real_escape_string($produto->descricao);
+	$nome = $con->real_escape_string($produto->getNome());
+	$preco = $con->real_escape_string($produto->getPreco());
+	$descricao = $con->real_escape_string($produto->getDescricao());
 
-	$query = "UPDATE produtos SET nome = '{$nome}', preco = {$preco}, descricao = '{$descricao}', categoria_id = '{$produto->categoria->id}', usado = {$produto->usado} WHERE id = '{$produto->id}'";
+	$query = "UPDATE produtos SET nome = '{$nome}', preco = {$preco}, descricao = '{$descricao}', categoria_id = '{$produto->cgetCtegoria()->getId()}', usado = {$produto->getUsado()} WHERE id = '{$produto->getId()}'";
 	return $con->query($query);
 }
 
 function insereProduto($con, Produto $produto) {
 	
-	$nome = $con->real_escape_string($produto->nome);
-	$preco = $con->real_escape_string($produto->preco);
+	$nome = $con->real_escape_string($produto->getNome());
+	$preco = $con->real_escape_string($produto->getPreco());
 	$descricao = $con->real_escape_string($produto->descricao);
 
-	$query = "INSERT INTO produtos (nome, preco, descricao, categoria_id, usado) VALUES ('{$nome}', {$preco}, '{$descricao}', {$produto->categoria_id}, {$produto->usado})";
+	$query = "INSERT INTO produtos (nome, preco, descricao, categoria_id, usado) VALUES ('{$nome}', {$preco}, '{$descricao}', {$produto->getCategoria()->getId()}, {$produto->getUsado()})";
 	return $con->query($query);
 }
 
